@@ -4,7 +4,7 @@ from models.database import init_db, save_prediction, get_stats, get_history
 
 main_bp = Blueprint('main', __name__)
 
-@main_bp.route('/', methods=['GET', 'POST'])
+@main_bp.route('/index', methods=['GET', 'POST'])
 def index():
     init_db()
     fake_count, real_count = get_stats()
