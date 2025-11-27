@@ -1,20 +1,23 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from models.database import get_stats, get_chart_data, get_history
+from functools import wraps
 
 admin_bp = Blueprint('admin', __name__)
 
 def login_required(f):
-    def wrap(*args, **kwargs):
-        if session.get('logged_in'):
-            return f(*args, **kwargs)
-        return redirect(url_for('admin.login'))
-    wrap.__name__ = f.__name__
-    return wrap
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('logged_in'):
+            return redirect(url_for('admin.login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['username'] == 'admin' and request.form['password'] == 'admin123':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username == 'admin' and password == 'admin123':
             session['logged_in'] = True
             return redirect(url_for('admin.dashboard'))
     return render_template('admin_login.html')
@@ -22,16 +25,21 @@ def login():
 @admin_bp.route('/dashboard')
 @login_required
 def dashboard():
+    fake_count, real_count = get_stats()       
     pie_data, line_data = get_chart_data()
     history = get_history()
-    fake, real = get_stats()
-    return render_template('admin_dashboard.html', 
-                         pie_data=pie_data, 
+    total = fake_count + real_count
+
+    return render_template('admin_dashboard.html',
+                         fake_count=fake_count,     
+                         real_count=real_count,     
+                         total=total,
+                         pie_data=pie_data,
                          line_data=line_data,
-                         history=history,
-                         total=fake+real)
+                         history=history)
 
 @admin_bp.route('/logout')
+@login_required
 def logout():
     session.pop('logged_in', None)
     return redirect(url_for('main.index'))

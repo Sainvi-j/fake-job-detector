@@ -91,7 +91,7 @@
 
           <a
             class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800"
-            href="/index"
+            href="/"
           >
             <i data-feather="sliders"></i>
             <span>Prediction Page</span>
@@ -188,7 +188,7 @@
                     </div>
                   </div>
                   <h2 class="text-3xl font-semibold text-red-500 mt-1">
-                    {{ fake }}
+                    {{ fake_count }}
                   </h2>
                   <p class="text-xs text-gray-500">Flagged fake jobs</p>
                 </div>
@@ -208,7 +208,7 @@
                     </div>
                   </div>
                   <h2 class="text-3xl font-semibold text-green-500 mt-1">
-                    {{ real }}
+                    {{ real_count }}
                   </h2>
                   <p class="text-xs text-gray-500">Verified real jobs</p>
                 </div>
@@ -274,16 +274,16 @@
                   <div class="flex justify-between">
                     <span>Fake Jobs</span>
                     <span class="font-semibold text-red-500">
-                      {% if total > 0 %} {{ (fake * 100 / total)|round(1) }}% {%
-                      else %}0%{% endif %}
+                      {% if total > 0 %} {{ (fake_count * 100 / total)|round(1)
+                      }}% {% else %}0%{% endif %}
                     </span>
                   </div>
 
                   <div class="flex justify-between">
                     <span>Real Jobs</span>
                     <span class="font-semibold text-green-500">
-                      {% if total > 0 %} {{ (real * 100 / total)|round(1) }}% {%
-                      else %}0%{% endif %}
+                      {% if total > 0 %} {{ (real_count * 100 / total)|round(1)
+                      }}% {% else %}0%{% endif %}
                     </span>
                   </div>
                 </div>
@@ -305,7 +305,7 @@
           data: {
               labels: ['Fake Jobs', 'Real Jobs'],
               datasets: [{
-                  data: [{{ fake }}, {{ real }}],
+                  data: [{{ fake_count }}, {{ real_count }}],
                   backgroundColor: ['#f87171', '#34d399']
               }]
           }
