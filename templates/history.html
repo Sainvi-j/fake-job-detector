@@ -1,370 +1,490 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Prediction History – JobCheck</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --g1:#4f46e5;
-      --g2:#0ea5e9;
-      --bg: linear-gradient(135deg,var(--g1),#7c3aed 55%,var(--g2));
-      --card:#ffffff;
-      --muted:#6b7280;
-      --green:#16a34a;
-      --green-600:#059669;
-      --red:#ef4444;
-      --red-600:#dc2626;
-      --radius:14px;
-      --ease: cubic-bezier(.2,.9,.3,1);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial;
-      background:var(--bg);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      color:#0f1724;
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
-      padding-top:70px;
-      animation:fadeIn .6s var(--ease) both;
-    }
-    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Prediction History – JobCheck</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --g1: #4f46e5;
+        --g2: #0ea5e9;
+        --bg: linear-gradient(135deg, var(--g1), #7c3aed 55%, var(--g2));
+        --card: #ffffff;
+        --muted: #6b7280;
+        --green: #16a34a;
+        --green-600: #059669;
+        --red: #ef4444;
+        --red-600: #dc2626;
+        --radius: 14px;
+        --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto,
+          Arial;
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color: #0f1724;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        padding-top: 70px;
+        animation: fadeIn 0.6s var(--ease) both;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
 
-    /* Navbar */
-    .navbar{
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      height:70px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:0 40px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
-      backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(255,255,255,0.1);
-      box-shadow:0 4px 24px rgba(0,0,0,0.08);
-      z-index:1000;
-    }
-    .navbar-logo{
-      font-size:24px;
-      font-weight:700;
-      color:#fff;
-      text-decoration:none;
-      letter-spacing:0.5px;
-      transition:opacity .2s var(--ease);
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .navbar-logo:hover{opacity:0.85}
-    .logo-mark{
-      width:36px;height:36px;border-radius:8px;
-      background:linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.06));
-      display:inline-flex;align-items:center;justify-content:center;
-      box-shadow:0 6px 18px rgba(12,8,48,0.18);
-    }
+      /* Navbar */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 40px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.12),
+          rgba(255, 255, 255, 0.05)
+        );
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        z-index: 1000;
+      }
+      .navbar-logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        letter-spacing: 0.5px;
+        transition: opacity 0.2s var(--ease);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .navbar-logo:hover {
+        opacity: 0.85;
+      }
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.15),
+          rgba(255, 255, 255, 0.06)
+        );
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 18px rgba(12, 8, 48, 0.18);
+      }
 
-    /* Main */
-    .wrap{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding:40px 20px;
-      flex:1 0 auto;
-      gap:24px;
-    }
+      /* Main */
+      .wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        flex: 1 0 auto;
+        gap: 24px;
+      }
 
-    .header-section{
-      text-align:center;
-      color:#fff;
-      max-width:720px;
-    }
-    .header-section h1{
-      margin:0 0 12px 0;
-      font-size:32px;
-      font-weight:700;
-    }
-    .header-section p{
-      margin:0;
-      font-size:16px;
-      opacity:0.92;
-    }
+      .header-section {
+        text-align: center;
+        color: #fff;
+        max-width: 720px;
+      }
+      .header-section h1 {
+        margin: 0 0 12px 0;
+        font-size: 32px;
+        font-weight: 700;
+      }
+      .header-section p {
+        margin: 0;
+        font-size: 16px;
+        opacity: 0.92;
+      }
 
-    .history-container{
-      width:100%;
-      max-width:920px;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
+      .history-container {
+        width: 100%;
+        max-width: 920px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
 
-    .history-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,255,255,0.99));
-      border-radius:var(--radius);
-      padding:24px;
-      box-shadow:0 10px 40px rgba(2,6,23,0.12);
-      transition:transform .18s var(--ease),box-shadow .18s var(--ease);
-      animation:cardIn .4s var(--ease) both;
-      display:flex;
-      gap:20px;
-      align-items:flex-start;
-    }
-    @keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    .history-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 20px 50px rgba(2,6,23,0.16);
-    }
+      .history-card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.97),
+          rgba(255, 255, 255, 0.99)
+        );
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: 0 10px 40px rgba(2, 6, 23, 0.12);
+        transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+        animation: cardIn 0.4s var(--ease) both;
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      @keyframes cardIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .history-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 50px rgba(2, 6, 23, 0.16);
+      }
 
-    .card-left{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .card-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .timestamp{
-      color:var(--muted);
-      font-size:13px;
-      font-weight:600;
-    }
-    .status-badge{
-      padding:6px 12px;
-      border-radius:999px;
-      font-weight:700;
-      font-size:12px;
-      color:#fff;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-    }
-    .status-badge.green{background:linear-gradient(90deg,var(--green),var(--green-600))}
-    .status-badge.red{background:linear-gradient(90deg,var(--red),var(--red-600))}
+      .card-left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .timestamp {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .status-badge {
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 12px;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .status-badge.green {
+        background: linear-gradient(90deg, var(--green), var(--green-600));
+      }
+      .status-badge.red {
+        background: linear-gradient(90deg, var(--red), var(--red-600));
+      }
 
-    .description-preview{
-      background:linear-gradient(180deg,#fff,#fbfdff);
-      border:1px solid rgba(15,23,36,0.04);
-      border-radius:8px;
-      padding:12px;
-      font-size:13px;
-      color:#0f1724;
-      line-height:1.5;
-      max-height:80px;
-      overflow:hidden;
-      position:relative;
-    }
-    .description-preview::after{
-      content:'';
-      position:absolute;
-      bottom:0;
-      left:0;
-      right:0;
-      height:30px;
-      background:linear-gradient(to bottom, transparent, #fbfdff);
-    }
+      .description-preview {
+        background: linear-gradient(180deg, #fff, #fbfdff);
+        border: 1px solid rgba(15, 23, 36, 0.04);
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 13px;
+        color: #0f1724;
+        line-height: 1.5;
+        max-height: 80px;
+        overflow: hidden;
+        position: relative;
+      }
+      .description-preview::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background: linear-gradient(to bottom, transparent, #fbfdff);
+      }
 
-    .card-right{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:8px;
-      min-width:100px;
-    }
-    .confidence-circle{
-      width:80px;
-      height:80px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      font-weight:800;
-      color:#fff;
-      position:relative;
-      box-shadow:0 8px 24px rgba(12,8,48,0.12);
-    }
-    .confidence-circle.green{background:linear-gradient(135deg,var(--green),var(--green-600))}
-    .confidence-circle.red{background:linear-gradient(135deg,var(--red),var(--red-600))}
-    .confidence-label{
-      font-size:11px;
-      color:var(--muted);
-      font-weight:600;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
-    }
+      .card-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        min-width: 100px;
+      }
+      .confidence-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 800;
+        color: #fff;
+        position: relative;
+        box-shadow: 0 8px 24px rgba(12, 8, 48, 0.12);
+      }
+      .confidence-circle.green {
+        background: linear-gradient(135deg, var(--green), var(--green-600));
+      }
+      .confidence-circle.red {
+        background: linear-gradient(135deg, var(--red), var(--red-600));
+      }
+      .confidence-label {
+        font-size: 11px;
+        color: var(--muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
 
-    .empty-state{
-      background:linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,255,255,0.99));
-      border-radius:var(--radius);
-      padding:60px 40px;
-      text-align:center;
-      box-shadow:0 10px 40px rgba(2,6,23,0.12);
-      max-width:520px;
-      margin:40px auto;
-    }
-    .empty-icon{
-      width:80px;
-      height:80px;
-      margin:0 auto 20px;
-      border-radius:16px;
-      background:linear-gradient(135deg, rgba(79,70,229,0.08), rgba(14,165,233,0.06));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .empty-state h2{
-      margin:0 0 12px 0;
-      font-size:22px;
-      color:#0f1724;
-    }
-    .empty-state p{
-      margin:0 0 24px 0;
-      color:var(--muted);
-      font-size:14px;
-    }
+      .empty-state {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.97),
+          rgba(255, 255, 255, 0.99)
+        );
+        border-radius: var(--radius);
+        padding: 60px 40px;
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(2, 6, 23, 0.12);
+        max-width: 520px;
+        margin: 40px auto;
+      }
+      .empty-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          rgba(79, 70, 229, 0.08),
+          rgba(14, 165, 233, 0.06)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .empty-state h2 {
+        margin: 0 0 12px 0;
+        font-size: 22px;
+        color: #0f1724;
+      }
+      .empty-state p {
+        margin: 0 0 24px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
 
-    .btn-primary{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:12px 24px;
-      border-radius:12px;
-      border:none;
-      background:linear-gradient(90deg,var(--g1),var(--g2));
-      color:#fff;
-      font-weight:700;
-      font-size:15px;
-      cursor:pointer;
-      text-decoration:none;
-      box-shadow:0 12px 36px rgba(79,70,229,0.16);
-      transition:transform .14s var(--ease),box-shadow .14s var(--ease);
-    }
-    .btn-primary:hover{
-      transform:translateY(-3px);
-      box-shadow:0 20px 50px rgba(79,70,229,0.22);
-    }
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(90deg, var(--g1), var(--g2));
+        color: #fff;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 12px 36px rgba(79, 70, 229, 0.16);
+        transition: transform 0.14s var(--ease), box-shadow 0.14s var(--ease);
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 50px rgba(79, 70, 229, 0.22);
+      }
 
-    .actions{
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      margin-top:24px;
-    }
-    .btn-secondary{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 20px;
-      border-radius:10px;
-      background:rgba(255,255,255,0.15);
-      border:1px solid rgba(255,255,255,0.2);
-      color:#fff;
-      text-decoration:none;
-      font-size:14px;
-      font-weight:600;
-      transition:all .2s var(--ease);
-    }
-    .btn-secondary:hover{
-      background:rgba(255,255,255,0.25);
-      transform:translateY(-2px);
-    }
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s var(--ease);
+      }
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+      }
 
-    footer{
-      padding:18px 20px;
-      text-align:center;
-      color:rgba(255,255,255,0.92);
-      font-size:13px;
-      border-top:1px solid rgba(255,255,255,0.04);
-    }
+      footer {
+        padding: 18px 20px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 13px;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+      }
 
-    @media (max-width:640px){
-      .navbar{padding:0 20px;height:auto;padding-top:15px;padding-bottom:15px}
-      body{padding-top:90px}
-      .header-section h1{font-size:24px}
-      .history-card{flex-direction:column;padding:20px}
-      .card-right{flex-direction:row;justify-content:space-between;width:100%}
-      .actions{flex-direction:column;align-items:stretch}
-    }
-  </style>
-</head>
-<body>
-  <nav class="navbar">
-    <a href="/" class="navbar-logo">
-      <span class="logo-mark">
-        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-          <rect x="6" y="6" width="36" height="36" rx="8" fill="url(#g)"/>
-          <path d="M15 26c3-5 8-7 14-7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
-        </svg>
-      </span>
-      JobCheck
-    </a>
-  </nav>
+      @media (max-width: 640px) {
+        .navbar {
+          padding: 0 20px;
+          height: auto;
+          padding-top: 15px;
+          padding-bottom: 15px;
+        }
+        body {
+          padding-top: 90px;
+        }
+        .header-section h1 {
+          font-size: 24px;
+        }
+        .history-card {
+          flex-direction: column;
+          padding: 20px;
+        }
+        .card-right {
+          flex-direction: row;
+          justify-content: space-between;
+          width: 100%;
+        }
+        .actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/" class="navbar-logo">
+        <span class="logo-mark">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+          >
+            <rect x="6" y="6" width="36" height="36" rx="8" fill="url(#g)" />
+            <path
+              d="M15 26c3-5 8-7 14-7"
+              stroke="#fff"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#7c3aed" />
+                <stop offset="1" stop-color="#0ea5e9" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        JobCheck
+      </a>
+    </nav>
 
-  <main class="wrap">
-    <div class="header-section">
-      <h1>Prediction History</h1>
-      <p>Review your previous job authenticity checks</p>
-    </div>
+    <main class="wrap">
+      <div class="header-section">
+        <h1>Prediction History</h1>
+        <p>Review your previous job authenticity checks</p>
+      </div>
 
-    {% if history and history|length > 0 %}
-    <div class="history-container">
-      {% for item in history %}
-      <div class="history-card" style="animation-delay:{{ loop.index0 * 0.05 }}s">
-        <div class="card-left">
-          <div class="card-header">
-            <span class="timestamp">{{ item.timestamp }}</span>
-            {% set is_fake = (item.label == "Fake Job") %}
-            <span class="status-badge {% if is_fake %}red{% else %}green{% endif %}">
-              {{ item.label }}
-            </span>
+      {% if history and history|length > 0 %}
+      <div class="history-container">
+        {% for item in history %}
+        <div
+          class="history-card"
+          style="animation-delay:{{ loop.index0 * 0.05 }}s"
+        >
+          <div class="card-left">
+            <div class="card-header">
+              <span class="timestamp">{{ item.timestamp }}</span>
+              {% set is_fake = (item.label == "Fake Job") %}
+              <span
+                class="status-badge {% if is_fake %}red{% else %}green{% endif %}"
+              >
+                {{ item.label }}
+              </span>
+            </div>
+            <div class="description-preview">
+              {{ item.description[:200] }}{% if item.description|length > 200
+              %}...{% endif %}
+            </div>
           </div>
-          <div class="description-preview">
-            {{ item.description[:200] }}{% if item.description|length > 200 %}...{% endif %}
+          <div class="card-right">
+            <div
+              class="confidence-circle {% if is_fake %}red{% else %}green{% endif %}"
+            >
+              {{ item.confidence }}%
+            </div>
+            <span class="confidence-label">Confidence</span>
           </div>
         </div>
-        <div class="card-right">
-          <div class="confidence-circle {% if is_fake %}red{% else %}green{% endif %}">
-            {{ item.confidence }}%
-          </div>
-          <span class="confidence-label">Confidence</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="color: #4f46e5"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="12" y1="18" x2="12" y2="12" />
+            <line x1="9" y1="15" x2="15" y2="15" />
+          </svg>
         </div>
+        <h2>No History Yet</h2>
+        <p>
+          You haven't checked any job postings yet. Start by analyzing your
+          first job description.
+        </p>
+        <a href="/" class="btn-primary">Check Your First Job</a>
       </div>
-      {% endfor %}
-    </div>
-    {% else %}
-    <div class="empty-state">
-      <div class="empty-icon">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#4f46e5">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14 2 14 8 20 8"/>
-          <line x1="12" y1="18" x2="12" y2="12"/>
-          <line x1="9" y1="15" x2="15" y2="15"/>
-        </svg>
+      {% endif %}
+
+      <div class="actions">
+        <a href="/index" class="btn-secondary">← Back to Home</a>
       </div>
-      <h2>No History Yet</h2>
-      <p>You haven't checked any job postings yet. Start by analyzing your first job description.</p>
-      <a href="/" class="btn-primary">Check Your First Job</a>
-    </div>
-    {% endif %}
+    </main>
 
-    <div class="actions">
-      <a href="/" class="btn-secondary">← Back to Home</a>
-    </div>
-  </main>
-
-  <footer>© 2025 JobCheck – Track Your Job Verification History</footer>
-</body>
+    <footer>© 2025 JobCheck – Track Your Job Verification History</footer>
+  </body>
 </html>
