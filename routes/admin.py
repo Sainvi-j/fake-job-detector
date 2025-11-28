@@ -40,7 +40,7 @@ def dashboard():
         fake_count=fake_count,
         real_count=real_count,
         total=total,
-        accuracy=accuracy,      # <--- send accuracy correctly
+        accuracy=accuracy,     
         dates=dates,
         counts=counts,
         history=history
