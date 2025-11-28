@@ -11,36 +11,50 @@ def index():
     fake_count, real_count = get_stats()
     last_history = get_history()[:1]
 
+    job_text = "" 
+
     if request.method == 'POST':
         job_text = request.form.get('job_description', '').strip()
 
         if len(job_text) < 50:
-            flash("Please enter a longer job description.", "error")
-            return redirect(url_for('main.index'))
+            flash("⚠ Please enter a more detailed job description (minimum 50 characters).", "error")
+            return render_template(
+                'index.html',
+                job_text=job_text,   
+                fake_count=fake_count,
+                real_count=real_count,
+                last_prediction=last_history[0] if last_history else None
+            )
 
+        
         result, confidence = predict_job(job_text)
 
         if result in ["Fake Job", "Real Job"]:
             save_prediction(job_text, result, confidence)
-            fake_count, real_count = get_stats() 
-            return render_template('result.html',
-                                 result=result,
-                                 confidence=confidence,
-                                 job_text=job_text,
-                                 fake_count=fake_count,
-                                 real_count=real_count)
+            fake_count, real_count = get_stats()
+
+            return render_template(
+                'result.html',
+                result=result,
+                confidence=confidence,
+                job_text=job_text,
+                fake_count=fake_count,
+                real_count=real_count
+            )
 
         else:
-            flash("Model error — please try again.", "error")
-            return redirect(url_for('main.index'))
+            flash("⚠ Prediction failed — please try again.", "error")
 
-    return render_template('index.html',
-                         fake_count=fake_count,
-                         real_count=real_count,
-                         last_prediction=last_history[0] if last_history else None)
+    
+    return render_template(
+        'index.html',
+        job_text=job_text,
+        fake_count=fake_count,
+        real_count=real_count,
+        last_prediction=last_history[0] if last_history else None
+    )
 
 
-# History page
 @main_bp.route('/history')
 def history():
     all_history = get_history()
