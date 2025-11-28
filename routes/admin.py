@@ -32,8 +32,10 @@ def dashboard():
     total = fake_count + real_count
     accuracy = round((real_count * 100 / total), 1) if total > 0 else 0
 
-    dates = [str(row[0]) for row in line_data]
-    counts = [row[1] for row in line_data]
+    clean_line_data = [row for row in line_data if row and len(row) >= 2]
+
+    dates = [str(row[0]) for row in clean_line_data]
+    counts = [row[1] for row in clean_line_data]
 
     return render_template(
         "admin_dashboard.html",
@@ -45,6 +47,7 @@ def dashboard():
         counts=counts,
         history=history
     )
+
 
 
 
