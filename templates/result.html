@@ -88,7 +88,8 @@
       transition:transform .18s var(--ease),box-shadow .18s var(--ease),opacity .18s;
       align-items:stretch;
       animation:cardIn .6s var(--ease) both;
-      overflow:hidden;
+      overflow:visible;
+      position:relative;
     }
     @keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     .result-card:hover{transform:translateY(-6px);box-shadow:0 28px 70px rgba(2,6,23,0.18)}
@@ -103,13 +104,33 @@
 
     h1{margin:4px 0 0 0;font-size:22px;color:#0f1724}
     .top-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    
     .status-badge{
-      padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px;color:#fff;
-      display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 30px rgba(12,8,48,0.06);
-      transition:transform .14s var(--ease);
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:13px;
+      color:#fff;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 8px 30px rgba(12,8,48,0.12);
+      transition:transform .14s var(--ease),box-shadow .14s var(--ease);
+      position:absolute;
+      top:20px;
+      right:20px;
+      z-index:10;
     }
-    .status-badge.green{background:linear-gradient(90deg,var(--green),var(--green-600))}
-    .status-badge.red{background:linear-gradient(90deg,var(--red),var(--red-600))}
+    .status-badge:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 40px rgba(12,8,48,0.16);
+    }
+    .status-badge.real{
+      background:linear-gradient(90deg,var(--green),var(--green-600));
+    }
+    .status-badge.fake{
+      background:linear-gradient(90deg,var(--red),var(--red-600));
+    }
 
     .stats-row{
       display:flex;
@@ -183,6 +204,12 @@
     /* responsive */
     @media (max-width:920px){
       .result-card{flex-direction:column;padding:20px;max-width:720px}
+      .status-badge{
+        top:16px;
+        right:16px;
+        padding:8px 14px;
+        font-size:12px;
+      }
     }
     @media (max-width:640px){
       header.navbar{flex-direction:column;align-items:flex-start;padding:14px 16px;gap:12px}
@@ -193,6 +220,12 @@
       .primary{width:100%;justify-content:center}
       .stats-row{flex-direction:column}
       .stat-card{min-width:unset}
+      .status-badge{
+        top:12px;
+        right:12px;
+        padding:7px 12px;
+        font-size:11px;
+      }
     }
   </style>
 </head>
@@ -212,11 +245,14 @@
 
   <main class="wrap" role="main">
     <section class="result-card" role="region" aria-labelledby="resultTitle">
+      {% set is_fake = (label == "Fake Job") %}
+      <span class="status-badge {% if is_fake %}fake{% else %}real{% endif %}" aria-live="polite" aria-label="Prediction: {{ 'Fake Job' if is_fake else 'Real Job' }}">
+        {{ 'Fake Job' if is_fake else 'Real Job' }}
+      </span>
+      
       <div class="content">
         <div class="top-row">
           <h1 id="resultTitle">Prediction Result</h1>
-          {% set is_fake = (label == "Fake Job") %}
-          <span class="status-badge {% if is_fake %}red{% else %}green{% endif %}" aria-live="polite">{{ label }}</span>
         </div>
 
         <div class="stats-row" role="list" aria-label="Detection counts">
