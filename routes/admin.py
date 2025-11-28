@@ -26,17 +26,25 @@ def login():
 @login_required
 def dashboard():
     fake_count, real_count = get_stats()       
-    pie_data, line_data = get_chart_data()
+    pie_data, line_data = get_chart_data()  
     history = get_history()
     total = fake_count + real_count
 
-    return render_template('admin_dashboard.html',
-                         fake_count=fake_count,     
-                         real_count=real_count,     
-                         total=total,
-                         pie_data=pie_data,
-                         line_data=line_data,
-                         history=history)
+   
+    dates = [str(row[0]) for row in line_data]  
+    counts = [row[1] for row in line_data]
+
+    return render_template(
+        'admin_dashboard.html',
+        fake_count=fake_count,
+        real_count=real_count,
+        total=total,
+        pie_data=pie_data,
+        dates=dates,         
+        counts=counts,        
+        history=history
+    )
+
 
 @admin_bp.route('/logout')
 @login_required
