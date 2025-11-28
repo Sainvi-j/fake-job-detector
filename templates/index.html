@@ -441,6 +441,15 @@
           </div>
           <h1>Verify Job Authenticity</h1>
 
+          <!-- FLASH MESSAGES -->
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="error">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
           <div class="form">
             <label for="job_description" class="sr-only">Job Description</label>
             <textarea
@@ -450,7 +459,7 @@
               placeholder="Paste the full job posting or description here…"
               required
               aria-required="true"
-            ></textarea>
+            >{{ job_text if job_text else "" }}</textarea>
 
             <div class="actions">
               <button
