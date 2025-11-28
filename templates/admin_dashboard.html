@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
 
-    
     <script src="https://cdn.tailwindcss.com"></script>
 
-    
     <script>
       window.tailwindLoaded = false;
       setTimeout(() => {
@@ -23,10 +21,8 @@
       window.tailwindLoaded = true;
     </script>
 
-    
     <script src="https://unpkg.com/feather-icons"></script>
 
-    
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
@@ -57,7 +53,6 @@
 
   <body class="bg-gray-100 fade-in">
     <div class="flex min-h-screen">
-      
       <aside class="w-64 bg-gray-900 text-white flex flex-col">
         <div class="p-6 border-b border-gray-800 flex items-center gap-3">
           <div
@@ -109,7 +104,6 @@
         </div>
       </aside>
 
-      
       <div class="flex-1 flex flex-col">
         <header class="p-6 bg-white shadow flex justify-between items-center">
           <div>
@@ -140,11 +134,18 @@
           </div>
         </header>
 
-        
         <main class="p-8 bg-gray-100">
           <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            {# --- Ensure total exists, otherwise compute from counts --- #}
+            {% if total is not defined %}
+              {% set total = (fake_count + real_count) if (fake_count is defined and real_count is defined) else 0 %}
+            {% endif %}
+
+            {# --- Compute accuracy locally if backend didn't provide it --- #}
+            {% set computed_accuracy = (real_count * 100 / total) | round(1) if total > 0 else 0 %}
+
             <div class="lg:col-span-2 space-y-6">
-              
               <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
                 <div class="bg-white p-5 rounded-2xl shadow smooth-card">
                   <div class="flex justify-between">
@@ -201,6 +202,7 @@
                   <p class="text-xs text-gray-500">Verified real jobs</p>
                 </div>
 
+                <!-- Accuracy card now uses computed_accuracy (falls back if backend didn't send accuracy) -->
                 <div class="bg-white p-5 rounded-2xl shadow smooth-card">
                   <div class="flex justify-between">
                     <span class="text-xs text-gray-400 uppercase"
@@ -213,13 +215,12 @@
                     </div>
                   </div>
                   <h2 class="text-3xl font-semibold text-blue-600 mt-1">
-                    {{ accuracy }}%
+                    {{ computed_accuracy }}%
                   </h2>
                   <p class="text-xs text-gray-500">Model accuracy</p>
                 </div>
               </div>
 
-              
               <div class="bg-white p-6 rounded-2xl shadow smooth-card">
                 <h2 class="text-lg font-semibold mb-4">
                   Fake vs Real Distribution
@@ -227,7 +228,6 @@
                 <canvas id="pieChart" class="h-64"></canvas>
               </div>
 
-             
               <div class="bg-white p-6 rounded-2xl shadow smooth-card">
                 <h2 class="text-lg font-semibold mb-4">
                   Daily Prediction Trend
@@ -236,7 +236,6 @@
               </div>
             </div>
 
-            
             <aside class="space-y-6">
               <div
                 class="bg-white p-6 rounded-2xl shadow text-center smooth-card"
@@ -288,13 +287,11 @@
       </div>
     </div>
 
-   
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
       feather.replace();
 
-      
       new Chart(document.getElementById("pieChart"), {
         type: "pie",
         data: {
@@ -308,7 +305,6 @@
         },
       });
 
-      
       new Chart(document.getElementById("lineChart"), {
         type: "line",
         data: {
