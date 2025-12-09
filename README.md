@@ -76,10 +76,10 @@ Credentials: `admin` / `admin123`
 
 | Member  | Role                          | Contribution                                         |
 | ------- | ----------------------------- | ---------------------------------------------------- |
-| Sainvi  | Backend & System Architecture | Flask structure, routing, database, ML integration   |
-| Sruthi  | Machine Learning Engineer     | Model training, feature engineering, accuracy tuning |
-| Muskaan | UI/UX Designer                | Complete frontend design, animations, responsiveness |
 | Mayur   | Dashboard & Admin Panel       | Admin interface, Chart.js integration, analytics     |
+| Sainvi  | Backend & System Architecture | Flask structure, routing, database, ML integration   |
+| Muskaan | UI/UX Designer                | Complete frontend design, animations, responsiveness |
+| Sruthi  | Machine Learning Engineer     | Model training, feature engineering, accuracy tuning |
 
 All members contributed to testing, debugging, and final polishing.
 
