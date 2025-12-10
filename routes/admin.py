@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 from models.database import get_stats, get_chart_data, get_history
 from functools import wraps
 
@@ -47,9 +47,17 @@ def dashboard():
         counts=counts,
         history=history
     )
-
-
-
+@admin_bp.route('/retrain', methods=['POST'])
+@login_required
+def retrain_model():
+    import subprocess
+    import sys
+    
+    # Run train_model.py in background
+    subprocess.Popen([sys.executable, 'train_model.py'])
+    
+    flash("Model retraining started! It will finish in a few seconds.", "success")
+    return redirect(url_for('admin.dashboard'))
 
 @admin_bp.route('/logout')
 @login_required

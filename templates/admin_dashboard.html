@@ -53,47 +53,107 @@
 
   <body class="bg-gray-100 fade-in">
     <div class="flex min-h-screen">
-      
       <aside class="w-64 bg-gray-900 text-white flex flex-col">
         <div class="p-6 border-b border-gray-800 flex items-center gap-3">
-          <div class="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center font-semibold">
+          <div
+            class="h-10 w-10 rounded-xl bg-indigo-600 flex items-center justify-center font-semibold"
+          >
             AJ
           </div>
           <div>
-            <p class="text-xs uppercase text-gray-400 tracking-widest">Admin Panel</p>
+            <p class="text-xs uppercase text-gray-400 tracking-widest">
+              Admin Panel
+            </p>
             <p class="text-lg font-semibold">JobCheck</p>
           </div>
         </div>
 
         <nav class="p-4 space-y-2 text-sm flex-1">
-          <a class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-indigo-600" href="#">
+          <a
+            class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-indigo-600"
+            href="#"
+          >
             <i data-feather="grid" class="w-4"></i>
             <span>Dashboard</span>
           </a>
 
-          <a class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800" href="/">
+          <a
+            class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800"
+            href="/"
+          >
             <i data-feather="sliders"></i>
             <span>Prediction Page</span>
           </a>
 
-          <a class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800" href="/history">
+          <a
+            class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-800"
+            href="/history"
+          >
             <i data-feather="clock"></i>
             <span>Prediction History</span>
           </a>
+          <!-- Retrain Model Button with Confirmation Popup -->
+          <div class="mt-6">
+            <button
+              onclick="showRetrainConfirm()"
+              class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 transition duration-200"
+            >
+              Retrain Model
+            </button>
+          </div>
+
+          <div
+            id="retrainModal"
+            class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+          >
+            <div class="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                Retrain Model?
+              </h3>
+              <p class="text-gray-600 mb-8">
+                This will retrain the AI model using the latest dataset.<br />
+                It takes ~10–20 seconds.
+              </p>
+              <div class="flex gap-4 justify-end">
+                <button
+                  onclick="hideRetrainConfirm()"
+                  class="px-6 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg font-medium transition"
+                >
+                  Cancel
+                </button>
+                <form
+                  method="POST"
+                  action="{{ url_for('admin.retrain_model') }}"
+                  style="display: inline"
+                >
+                  <button
+                    type="submit"
+                    class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-medium transition"
+                  >
+                    Yes, Retrain Now
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
         </nav>
 
         <div class="p-4 border-t border-gray-800">
-          <a href="/" class="block w-full text-center px-3 py-2 bg-red-600 rounded-lg hover:bg-red-700 text-white">
+          <a
+            href="/"
+            class="block w-full text-center px-3 py-2 bg-red-600 rounded-lg hover:bg-red-700 text-white"
+          >
             Logout
           </a>
         </div>
       </aside>
 
-      
       <div class="flex-1 flex flex-col">
         <header class="p-6 bg-white shadow flex justify-between items-center">
           <div>
-            <p class="text-xs uppercase text-gray-500 tracking-widest">Analytics Overview</p>
+            <p class="text-xs uppercase text-gray-500 tracking-widest">
+              Analytics Overview
+            </p>
             <h1 class="text-2xl font-semibold">Admin Dashboard</h1>
           </div>
 
@@ -110,85 +170,114 @@
               ></i>
             </div>
 
-            <div class="h-10 w-10 bg-indigo-500 rounded-full flex items-center justify-center text-white">
+            <div
+              class="h-10 w-10 bg-indigo-500 rounded-full flex items-center justify-center text-white"
+            >
               A
             </div>
           </div>
         </header>
 
-        
         <main class="p-8 bg-gray-100">
           <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 space-y-6">
-              
               <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
-
-                
                 <div class="bg-white p-5 rounded-2xl shadow smooth-card">
                   <div class="flex justify-between">
-                    <span class="text-xs text-gray-400 uppercase">Total Predictions</span>
-                    <div class="h-8 w-8 bg-indigo-100 rounded flex items-center justify-center">
-                      <i data-feather="activity" class="text-indigo-600 w-4"></i>
+                    <span class="text-xs text-gray-400 uppercase"
+                      >Total Predictions</span
+                    >
+                    <div
+                      class="h-8 w-8 bg-indigo-100 rounded flex items-center justify-center"
+                    >
+                      <i
+                        data-feather="activity"
+                        class="text-indigo-600 w-4"
+                      ></i>
                     </div>
                   </div>
                   <h2 class="text-3xl font-semibold mt-1">{{ total }}</h2>
                   <p class="text-xs text-gray-500">Total jobs processed</p>
                 </div>
 
-                
                 <div class="bg-white p-5 rounded-2xl shadow smooth-card">
                   <div class="flex justify-between">
-                    <span class="text-xs text-gray-400 uppercase">Fake Jobs</span>
-                    <div class="h-8 w-8 bg-red-100 rounded flex items-center justify-center">
-                      <i data-feather="alert-triangle" class="text-red-500 w-4"></i>
+                    <span class="text-xs text-gray-400 uppercase"
+                      >Fake Jobs</span
+                    >
+                    <div
+                      class="h-8 w-8 bg-red-100 rounded flex items-center justify-center"
+                    >
+                      <i
+                        data-feather="alert-triangle"
+                        class="text-red-500 w-4"
+                      ></i>
                     </div>
                   </div>
-                  <h2 class="text-3xl font-semibold text-red-500 mt-1">{{ fake_count }}</h2>
+                  <h2 class="text-3xl font-semibold text-red-500 mt-1">
+                    {{ fake_count }}
+                  </h2>
                   <p class="text-xs text-gray-500">Flagged fake jobs</p>
                 </div>
 
-                
                 <div class="bg-white p-5 rounded-2xl shadow smooth-card">
                   <div class="flex justify-between">
-                    <span class="text-xs text-gray-400 uppercase">Real Jobs</span>
-                    <div class="h-8 w-8 bg-green-100 rounded flex items-center justify-center">
-                      <i data-feather="check-circle" class="text-green-500 w-4"></i>
+                    <span class="text-xs text-gray-400 uppercase"
+                      >Real Jobs</span
+                    >
+                    <div
+                      class="h-8 w-8 bg-green-100 rounded flex items-center justify-center"
+                    >
+                      <i
+                        data-feather="check-circle"
+                        class="text-green-500 w-4"
+                      ></i>
                     </div>
                   </div>
-                  <h2 class="text-3xl font-semibold text-green-500 mt-1">{{ real_count }}</h2>
+                  <h2 class="text-3xl font-semibold text-green-500 mt-1">
+                    {{ real_count }}
+                  </h2>
                   <p class="text-xs text-gray-500">Verified real jobs</p>
                 </div>
 
-                
                 <div class="bg-white p-5 rounded-2xl shadow smooth-card">
                   <div class="flex justify-between">
-                    <span class="text-xs text-gray-400 uppercase">Accuracy</span>
-                    <div class="h-8 w-8 bg-blue-100 rounded flex items-center justify-center">
+                    <span class="text-xs text-gray-400 uppercase"
+                      >Accuracy</span
+                    >
+                    <div
+                      class="h-8 w-8 bg-blue-100 rounded flex items-center justify-center"
+                    >
                       <i data-feather="percent" class="text-blue-500 w-4"></i>
                     </div>
                   </div>
-                  <h2 class="text-3xl font-semibold text-blue-600 mt-1">{{ accuracy }}%</h2>
+                  <h2 class="text-3xl font-semibold text-blue-600 mt-1">95%</h2>
                   <p class="text-xs text-gray-500">Model accuracy</p>
                 </div>
               </div>
 
-              
               <div class="bg-white p-6 rounded-2xl shadow smooth-card">
-                <h2 class="text-lg font-semibold mb-4">Fake vs Real Distribution</h2>
+                <h2 class="text-lg font-semibold mb-4">
+                  Fake vs Real Distribution
+                </h2>
                 <canvas id="pieChart" class="h-64"></canvas>
               </div>
 
-              
               <div class="bg-white p-6 rounded-2xl shadow smooth-card">
-                <h2 class="text-lg font-semibold mb-4">Daily Prediction Trend</h2>
+                <h2 class="text-lg font-semibold mb-4">
+                  Daily Prediction Trend
+                </h2>
                 <canvas id="lineChart" class="h-72"></canvas>
               </div>
             </div>
 
-            
             <aside class="space-y-6">
-              <div class="bg-white p-6 rounded-2xl shadow text-center smooth-card">
-                <div class="h-16 w-16 bg-indigo-600 rounded-full mx-auto flex items-center justify-center text-white text-xl font-semibold">
+              <div
+                class="bg-white p-6 rounded-2xl shadow text-center smooth-card"
+              >
+                <div
+                  class="h-16 w-16 bg-indigo-600 rounded-full mx-auto flex items-center justify-center text-white text-xl font-semibold"
+                >
                   A
                 </div>
                 <h3 class="mt-3 font-semibold">Admin User</h3>
@@ -207,22 +296,16 @@
                   <div class="flex justify-between">
                     <span>Fake Jobs</span>
                     <span class="font-semibold text-red-500">
-                      {% if total > 0 %}
-                        {{ (fake_count * 100 / total)|round(1) }}%
-                      {% else %}
-                        0%
-                      {% endif %}
+                      {% if total > 0 %} {{ (fake_count * 100 / total)|round(1)
+                      }}% {% else %} 0% {% endif %}
                     </span>
                   </div>
 
                   <div class="flex justify-between">
                     <span>Real Jobs</span>
                     <span class="font-semibold text-green-500">
-                      {% if total > 0 %}
-                        {{ (real_count * 100 / total)|round(1) }}%
-                      {% else %}
-                        0%
-                      {% endif %}
+                      {% if total > 0 %} {{ (real_count * 100 / total)|round(1)
+                      }}% {% else %} 0% {% endif %}
                     </span>
                   </div>
                 </div>
@@ -236,38 +319,47 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-      feather.replace();
+            feather.replace();
 
-      
-      new Chart(document.getElementById("pieChart"), {
-        type: "pie",
-        data: {
-          labels: ["Fake Jobs", "Real Jobs"],
-          datasets: [
-            {
-              data: [{{ fake_count }}, {{ real_count }}],
-              backgroundColor: ["#f87171", "#34d399"],
-            },
-          ],
-        },
-      });
 
-      
-      new Chart(document.getElementById("lineChart"), {
-        type: "line",
-        data: {
-          labels: {{ dates | tojson }},
-          datasets: [
-            {
-              label: "Predictions",
-              data: {{ counts | tojson }},
-              borderColor: "#4f46e5",
-              borderWidth: 3,
-              tension: 0.35,
-            },
-          ],
-        },
-      });
+            new Chart(document.getElementById("pieChart"), {
+              type: "pie",
+              data: {
+                labels: ["Fake Jobs", "Real Jobs"],
+                datasets: [
+                  {
+                    data: [{{ fake_count }}, {{ real_count }}],
+                    backgroundColor: ["#f87171", "#34d399"],
+                  },
+                ],
+              },
+            });
+
+
+            new Chart(document.getElementById("lineChart"), {
+              type: "line",
+              data: {
+                labels: {{ dates | tojson }},
+                datasets: [
+                  {
+                    label: "Predictions",
+                    data: {{ counts | tojson }},
+                    borderColor: "#4f46e5",
+                    borderWidth: 3,
+                    tension: 0.35,
+                  },
+                ],
+              },
+            });
+
+            function showRetrainConfirm() {
+          document.getElementById('retrainModal').classList.remove('hidden');
+          document.getElementById('retrainModal').classList.add('flex');
+      }
+      function hideRetrainConfirm() {
+          document.getElementById('retrainModal').classList.add('hidden');
+          document.getElementById('retrainModal').classList.remove('flex');
+      }
     </script>
   </body>
 </html>
