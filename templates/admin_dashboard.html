@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
 
-    <!-- FIXED TAILWIND LOADER WITH GUARANTEED FALLBACK -->
+    
     <script>
       window.tailwindLoaded = false;
 
@@ -21,7 +21,7 @@
       document.head.appendChild(cdnScript);
     </script>
 
-    <!-- Tailwind fallback (loads if CDN fails) -->
+   
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
@@ -89,7 +89,7 @@
           </button>
         </nav>
 
-        <!-- Logout raised upward -->
+        
         <div class="p-3 mb-3 border-t border-gray-800">
           <a href="/" class="block w-full text-center px-3 py-2 bg-red-600 rounded-lg hover:bg-red-700 text-white">
             Logout
@@ -238,7 +238,7 @@
       </div>
     </div>
 
-    <!-- RETRAIN MODEL POPUP -->
+    
     <div
       id="retrainModal"
       class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
@@ -271,11 +271,11 @@
       </div>
     </div>
 
-    <!-- SCRIPTS -->
+   
     <script>
       feather.replace();
 
-      // Donut Chart
+      
       new Chart(document.getElementById("pieChart"), {
         type: "doughnut",
         data: {
@@ -313,7 +313,7 @@
         },
       });
 
-      // RETRAIN MODEL POPUP LOGIC
+      
       function showRetrainConfirm() {
         const modal = document.getElementById("retrainModal");
         modal.classList.remove("hidden");
