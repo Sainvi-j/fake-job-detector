@@ -5,7 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FIXED TAILWIND LOADER WITH GUARANTEED FALLBACK -->
+    <script>
+      window.tailwindLoaded = false;
+
+      const cdnScript = document.createElement("script");
+      cdnScript.src = "https://cdn.tailwindcss.com";
+      cdnScript.onload = () => {
+        window.tailwindLoaded = true;
+        console.log("Tailwind CDN loaded successfully");
+      };
+      cdnScript.onerror = () => {
+        console.warn("Tailwind CDN failed — fallback stylesheet will apply.");
+      };
+      document.head.appendChild(cdnScript);
+    </script>
+
+    <!-- Tailwind fallback (loads if CDN fails) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      onload="if(!window.tailwindLoaded){console.log('Fallback Tailwind Loaded')}"
+    />
+
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -37,9 +59,7 @@
             AJ
           </div>
           <div>
-            <p class="text-xs uppercase text-gray-400 tracking-widest">
-              Admin Panel
-            </p>
+            <p class="text-xs uppercase text-gray-400 tracking-widest">Admin Panel</p>
             <p class="text-lg font-semibold">JobCheck</p>
           </div>
         </div>
@@ -69,7 +89,7 @@
           </button>
         </nav>
 
-        <!-- Logout Slightly Raised -->
+        <!-- Logout raised upward -->
         <div class="p-3 mb-3 border-t border-gray-800">
           <a href="/" class="block w-full text-center px-3 py-2 bg-red-600 rounded-lg hover:bg-red-700 text-white">
             Logout
@@ -77,7 +97,7 @@
         </div>
       </aside>
 
-      <!-- MAIN -->
+      <!-- MAIN CONTENT -->
       <div class="flex-1 flex flex-col">
         <header class="p-6 bg-white shadow flex justify-between items-center">
           <div>
@@ -103,7 +123,7 @@
             <!-- LEFT COLUMN -->
             <div class="lg:col-span-2 flex flex-col gap-6">
 
-              <!-- RESTORED STAT CARDS -->
+              <!-- STAT CARDS -->
               <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
 
                 <!-- Total Predictions -->
@@ -156,7 +176,7 @@
 
               </div>
 
-              <!-- Fake vs Real Card (auto-stretch) -->
+              <!-- Fake vs Real Card -->
               <div class="bg-white p-4 rounded-2xl shadow smooth-card flex-1 flex flex-col">
                 <h2 class="text-md font-semibold mb-3">Fake vs Real Distribution</h2>
                 <div class="flex flex-1 justify-center items-center">
@@ -206,7 +226,6 @@
                 </div>
               </div>
 
-              <!-- Daily Trend -->
               <div class="bg-white p-4 rounded-2xl shadow smooth-card h-80 flex flex-col">
                 <h2 class="text-md font-semibold mb-2">Daily Prediction Trend</h2>
                 <canvas id="lineChart" class="flex-1"></canvas>
@@ -219,6 +238,40 @@
       </div>
     </div>
 
+    <!-- RETRAIN MODEL POPUP -->
+    <div
+      id="retrainModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Retrain Model?</h3>
+
+        <p class="text-gray-600 mb-8">
+          This will retrain the AI model using the latest dataset.<br />
+          It takes ~10–20 seconds.
+        </p>
+
+        <div class="flex gap-4 justify-end">
+          <button
+            onclick="hideRetrainConfirm()"
+            class="px-6 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg font-medium transition"
+          >
+            Cancel
+          </button>
+
+          <form method="POST" action="{{ url_for('admin.retrain_model') }}" style="display:inline">
+            <button
+              type="submit"
+              class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-medium transition"
+            >
+              Yes, Retrain Now
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
     <script>
       feather.replace();
 
@@ -259,6 +312,19 @@
           ],
         },
       });
+
+      // RETRAIN MODEL POPUP LOGIC
+      function showRetrainConfirm() {
+        const modal = document.getElementById("retrainModal");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function hideRetrainConfirm() {
+        const modal = document.getElementById("retrainModal");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
     </script>
   </body>
 </html>
