@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -26,33 +26,18 @@
       * {
         box-sizing: border-box;
       }
-      html,
-      body {
+      html, body {
         height: 100%;
       }
       body {
         margin: 0;
-        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto,
-          Arial;
+        font-family: "Poppins", system-ui;
         background: var(--bg);
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         color: #0f1724;
         display: flex;
         flex-direction: column;
         min-height: 100vh;
         padding: 0;
-        animation: pageFade 0.6s var(--ease) both;
-      }
-      @keyframes pageFade {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: none;
-        }
       }
 
       header.navbar {
@@ -60,14 +45,11 @@
         align-items: center;
         justify-content: space-between;
         padding: 16px 24px;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.06),
-          rgba(255, 255, 255, 0.02)
-        );
+        background: rgba(255, 255, 255, 0.06);
         backdrop-filter: blur(6px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       }
+
       .brand {
         display: flex;
         align-items: center;
@@ -75,40 +57,6 @@
         color: #fff;
         font-weight: 700;
         font-size: 18px;
-        letter-spacing: 0.2px;
-      }
-      .brand .logo-mark {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.12),
-          rgba(255, 255, 255, 0.04)
-        );
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex: 0 0 36px;
-        box-shadow: 0 6px 18px rgba(12, 8, 48, 0.18);
-      }
-      .admin-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 9px 14px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.12);
-        color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 14px;
-        transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
-      }
-      .admin-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(2, 6, 23, 0.12);
       }
 
       main.wrap {
@@ -122,56 +70,13 @@
       .result-card {
         width: 100%;
         max-width: 920px;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.97),
-          rgba(255, 255, 255, 0.99)
-        );
+        background: #fff;
         border-radius: var(--radius);
         padding: 28px;
         display: flex;
         gap: 24px;
         box-shadow: 0 18px 48px rgba(2, 6, 23, 0.16);
-        transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease),
-          opacity 0.18s;
-        align-items: stretch;
-        animation: cardIn 0.6s var(--ease) both;
-        overflow: visible;
         position: relative;
-      }
-      @keyframes cardIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: none;
-        }
-      }
-      .result-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 28px 70px rgba(2, 6, 23, 0.18);
-      }
-
-      .content {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
-      }
-
-      h1 {
-        margin: 4px 0 0 0;
-        font-size: 22px;
-        color: #0f1724;
-      }
-      .top-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
       }
 
       .status-badge {
@@ -180,20 +85,11 @@
         font-weight: 700;
         font-size: 13px;
         color: #fff;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        box-shadow: 0 8px 30px rgba(12, 8, 48, 0.12);
-        transition: transform 0.14s var(--ease), box-shadow 0.14s var(--ease);
         position: absolute;
         top: 20px;
         right: 20px;
-        z-index: 10;
       }
-      .status-badge:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 40px rgba(12, 8, 48, 0.16);
-      }
+
       .status-badge.real {
         background: linear-gradient(90deg, var(--green), var(--green-600));
       }
@@ -201,87 +97,21 @@
         background: linear-gradient(90deg, var(--red), var(--red-600));
       }
 
-      .stats-row {
-        display: flex;
-        gap: 12px;
-        margin-top: 12px;
-        align-items: stretch;
-        flex-wrap: wrap;
-      }
       .stat-card {
-        flex: 1 1 140px;
-        min-width: 140px;
         padding: 14px;
         border-radius: 12px;
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        box-shadow: 0 10px 30px rgba(12, 8, 48, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.06);
       }
+
       .stat-card.green {
-        background: linear-gradient(
-          90deg,
-          rgba(5, 150, 105, 0.12),
-          rgba(22, 163, 74, 0.12)
-        );
+        background: rgba(22, 163, 74, 0.12);
         color: var(--green-600);
       }
+
       .stat-card.red {
-        background: linear-gradient(
-          90deg,
-          rgba(239, 68, 68, 0.08),
-          rgba(220, 38, 38, 0.08)
-        );
+        background: rgba(220, 38, 38, 0.12);
         color: var(--red-600);
       }
-      .stat-num {
-        font-size: 28px;
-        font-weight: 800;
-      }
-      .stat-label {
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--muted);
-      }
 
-      .confidence {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-        margin-top: 8px;
-      }
-      .confidence-number {
-        font-size: 42px;
-        font-weight: 800;
-        color: #0f1724;
-        display: flex;
-        align-items: baseline;
-        gap: 8px;
-      }
-      .confidence-number small {
-        font-size: 16px;
-        color: var(--muted);
-        font-weight: 600;
-      }
-
-      .meter {
-        width: 100%;
-        height: 14px;
-        background: rgba(15, 23, 36, 0.06);
-        border-radius: 999px;
-        overflow: hidden;
-        margin-top: 8px;
-        box-shadow: inset 0 2px 6px rgba(12, 8, 48, 0.04);
-      }
-      .meter-fill {
-        height: 100%;
-        width: 0;
-        transition: width 900ms ease, background-color 0.3s ease;
-        border-radius: 999px;
-      }
       .meter-fill.green {
         background: linear-gradient(90deg, var(--green), var(--green-600));
       }
@@ -289,222 +119,70 @@
         background: linear-gradient(90deg, var(--red), var(--red-600));
       }
 
-      .desc {
-        margin-top: 12px;
-        background: linear-gradient(180deg, #fff, #fbfdff);
-        border: 1px solid rgba(15, 23, 36, 0.04);
-        border-radius: 10px;
-        padding: 14px;
-        font-size: 14px;
-        color: #0f1724;
-        line-height: 1.5;
-        max-height: 420px;
-        overflow: auto;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        box-shadow: 0 8px 26px rgba(12, 8, 48, 0.04);
-      }
-
-      .actions {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-        margin-top: 12px;
-      }
-      .primary {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 12px 18px;
-        border-radius: 12px;
-        border: none;
-        background: linear-gradient(90deg, var(--g1), var(--g2));
-        color: #fff;
-        font-weight: 700;
-        cursor: pointer;
-        font-size: 15px;
-        text-decoration: none;
-        box-shadow: 0 12px 36px rgba(79, 70, 229, 0.16);
-        transition: transform 0.14s var(--ease), box-shadow 0.14s var(--ease),
-          opacity 0.12s;
-      }
-      .primary:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 50px rgba(79, 70, 229, 0.22);
-      }
-      .primary:active {
-        transform: translateY(-1px);
-        opacity: 0.98;
-      }
-
       footer {
         padding: 18px 20px;
         text-align: center;
         color: rgba(255, 255, 255, 0.92);
-        font-size: 13px;
-        background: transparent;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
-      }
-
-      /* responsive */
-      @media (max-width: 920px) {
-        .result-card {
-          flex-direction: column;
-          padding: 20px;
-          max-width: 720px;
-        }
-        .status-badge {
-          top: 16px;
-          right: 16px;
-          padding: 8px 14px;
-          font-size: 12px;
-        }
-      }
-      @media (max-width: 640px) {
-        header.navbar {
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 14px 16px;
-          gap: 12px;
-        }
-        .brand {
-          font-size: 16px;
-        }
-        .desc {
-          max-height: 260px;
-        }
-        .confidence-number {
-          font-size: 36px;
-        }
-        .actions {
-          flex-direction: column;
-          align-items: stretch;
-        }
-        .primary {
-          width: 100%;
-          justify-content: center;
-        }
-        .stats-row {
-          flex-direction: column;
-        }
-        .stat-card {
-          min-width: unset;
-        }
-        .status-badge {
-          top: 12px;
-          right: 12px;
-          padding: 7px 12px;
-          font-size: 11px;
-        }
       }
     </style>
   </head>
+
   <body>
-    <header class="navbar" role="banner">
-      <div class="brand" aria-label="JobCheck">
-        <span class="logo-mark" aria-hidden="true">
-          <svg
-            viewBox="0 0 48 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            aria-hidden="true"
-          >
-            <rect x="6" y="6" width="36" height="36" rx="8" fill="url(#g)" />
-            <path
-              d="M15 26c3-5 8-7 14-7"
-              stroke="#fff"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <defs>
-              <linearGradient id="g" x1="0" x2="1">
-                <stop offset="0" stop-color="#7c3aed" />
-                <stop offset="1" stop-color="#0ea5e9" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </span>
-        JobCheck
+    <header class="navbar">
+      <div class="brand">
+        <span class="logo-mark"></span> JobCheck
       </div>
     </header>
 
-    <main class="wrap" role="main">
-      <section class="result-card" role="region" aria-labelledby="resultTitle">
-        {% set is_fake = (label == "Fake Job") %}
-        <span
-          class="status-badge {% if is_fake %}fake{% else %}real{% endif %}"
-          aria-live="polite"
-          aria-label="Prediction: {{ 'Fake Job' if is_fake else 'Real Job' }}"
-        >
-          {{ 'Fake Job' if is_fake else 'Real Job' }}
+    <main class="wrap">
+
+      {% set is_fake = ('fake' in label|lower) %}
+
+      <section class="result-card">
+
+        <!-- FIXED BADGE -->
+        <span class="status-badge {% if is_fake %}fake{% else %}real{% endif %}">
+          {{ "Fake Job" if is_fake else "Real Job" }}
         </span>
 
         <div class="content">
-          <div class="top-row">
-            <h1 id="resultTitle">Prediction Result</h1>
-          </div>
 
-          <div class="stats-row" role="list" aria-label="Detection counts">
-            <div
-              class="stat-card green"
-              role="listitem"
-              aria-label="Real jobs detected"
-            >
+          <h1>Prediction Result</h1>
+
+          <div class="stats-row">
+            <div class="stat-card green">
               <div class="stat-num">{{ real_count }}</div>
               <div class="stat-label">Real Jobs Detected</div>
             </div>
-            <div
-              class="stat-card red"
-              role="listitem"
-              aria-label="Fake jobs detected"
-            >
+
+            <div class="stat-card red">
               <div class="stat-num">{{ fake_count }}</div>
               <div class="stat-label">Fake Jobs Detected</div>
             </div>
           </div>
 
-          <div class="confidence" aria-label="Confidence">
+          <div class="confidence">
             <div class="confidence-number">
               {{ confidence }}<small>% confidence</small>
             </div>
-            <div class="meter" role="img" aria-label="Confidence meter">
+
+            <div class="meter">
               <div
                 class="meter-fill {% if is_fake %}red{% else %}green{% endif %}"
-                style="width: {{ confidence }}%"
-              ></div>
+                style="width: {{ confidence }}%">
+              </div>
             </div>
           </div>
 
-          <div style="margin-top: 12px; font-weight: 600; color: var(--muted)">
-            Original Job Description
-          </div>
-          <div class="desc" role="article" aria-label="Job description">
-            {{ job_text }}
-          </div>
+          <h3 style="margin-top: 12px; color: var(--muted);">Original Job Description</h3>
+
+          <div class="desc">{{ job_text }}</div>
 
           <div class="actions">
-            <a
-              href="/"
-              class="primary"
-              role="button"
-              aria-label="Check another job"
-              >Check Another Job</a
-            >
-            <a
-              href="/history"
-              class="primary"
-              role="button"
-              aria-label="View history"
-              style="
-                background: rgba(79, 70, 229, 0.15);
-                color: #4f46e5;
-                box-shadow: 0 8px 24px rgba(79, 70, 229, 0.08);
-              "
-              >View History</a
-            >
+            <a href="/" class="primary">Check Another Job</a>
+            <a href="/history" class="primary" style="background:#eee; color:#4f46e5;">
+              View History
+            </a>
           </div>
         </div>
       </section>
@@ -512,28 +190,5 @@
 
     <footer>© 2025 JobCheck – AI-Powered Job Authenticity Analysis</footer>
 
-    <script>
-      (function(){
-        try{
-          var fill = document.querySelector('.meter-fill');
-          if(!fill) return;
-          var w = fill.style.width || '{{ confidence }}%';
-          fill.style.width = '0%';
-
-          // Ensure color class is applied before animation
-          {% if is_fake %}
-          fill.classList.add('red');
-          fill.classList.remove('green');
-          {% else %}
-          fill.classList.add('green');
-          fill.classList.remove('red');
-          {% endif %}
-
-          requestAnimationFrame(function(){
-            setTimeout(function(){ fill.style.width = w; }, 60);
-          });
-        }catch(e){}
-      })();
-    </script>
   </body>
 </html>
