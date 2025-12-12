@@ -35,7 +35,7 @@ def index():
 
             return render_template(
                 'result.html',
-                result=result,
+                label=result,
                 confidence=confidence,
                 job_text=job_text,
                 fake_count=fake_count,
