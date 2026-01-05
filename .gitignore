@@ -4,4 +4,3 @@ predictions.db
 .env
 venv/
 .DS_Store
-train_model.py

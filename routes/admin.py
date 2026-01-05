@@ -52,11 +52,24 @@ def dashboard():
 def retrain_model():
     import subprocess
     import sys
+    from werkzeug.utils import secure_filename
+
+    option = request.form.get('dataset_option', 'default')
+    dataset_path = 'job_dataset.csv'  # default
+
+    if option == 'upload':
+        file = request.files.get('new_dataset')
+        if file and file.filename.endswith('.csv'):
+            filename = secure_filename(file.filename)
+            file.save(filename)
+            dataset_path = filename  # use uploaded file for training
+        else:
+            flash("Invalid CSV file uploaded. Using default dataset.", "warning")
+
+    # Run train_model.py with dataset_path as argument
+    subprocess.Popen([sys.executable, 'train_model.py', dataset_path])
     
-    # Run train_model.py in background
-    subprocess.Popen([sys.executable, 'train_model.py'])
-    
-    flash("Model retraining started! It will finish in a few seconds.", "success")
+    flash("Model retraining started with selected dataset! It will finish in a few seconds.", "success")
     return redirect(url_for('admin.dashboard'))
 
 @admin_bp.route('/logout')
